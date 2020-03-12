@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--start benchmark.js -->
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/benchmark@2.1.4/benchmark.min.js"></script>
+    <!--end benchmark.js -->
+
+    <!-- добавим стили mocha для отображения результатов -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.css">
+    <!-- добавляем сам фреймворк mocha -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
+    <script>
+        // включаем режим тестирования в стиле BDD
+        mocha.setup('bdd');
+    </script>
+    <!-- добавим chai -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+    <script>
+        // chai предоставляет большое количество функций. Объявим assert глобально
+        let assert = chai.assert;
+    </script>
+</head>
+
+<body>
+    <!-- элемент с id="mocha" будет содержать результаты тестов -->
+    <div id="mocha"></div>
+    <!-- скрипт со спецификацией (describe, it...) -->
+    <script src="pow1.spec.js"></script>
+    <script src="pow2.spec.js"></script>
+    <script src="pow3.spec.js"></script>
+
+    <script>
+        function pow1(x, n) {
+            return x ** n;
+        }
+
+        function pow2(x, n) {
+            return Math.pow(x, n);
+        }
+
+        function pow3(x, n) {
+            let result = x;
+
+            for (let i = 1; i < n; i++) {
+                result *= x;
+            }
+
+            return result;
+        }
+    </script>
+    <script>
+        var suite = new Benchmark.Suite;
+
+        // add tests
+        suite.add('[x ** n]', pow1)
+            .add('[Math.pow(x, n)]', pow2)
+            .add('[Real function]', pow3)
+            // add listeners
+            .on('cycle', function (event) {
+                console.log(String(event.target));
+            })
+            .on('complete', function () {
+                console.log('Fastest is ' + this.filter('fastest').map('name'));
+            })
+            // run async
+            .run({
+                'async': true
+            });
+    </script>
+    <!-- запускаем тест! -->
+    <script>
+        mocha.run();
+    </script>
+</body>
+
+</html>
