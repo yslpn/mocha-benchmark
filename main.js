@@ -1,5 +1,16 @@
 mocha.setup('bdd');
 
+const resetTests = () => {
+    mocha.suite.suites = [];
+    let testSpecs = document.getElementById('testSpecs');
+    if (testSpecs) { testSpecs.remove() };
+    testSpecs = document.createElement('script');
+    testSpecs.src = './pow.spec.js';
+    testSpecs.async = true;
+    testSpecs.id = 'testSpecs';
+    document.body.appendChild(testSpecs);
+}
+
 const startMocha = () => {
     document.getElementById('mocha').textContent = '';
     window.eval(CodeMirror1.getValue());
@@ -8,6 +19,7 @@ const startMocha = () => {
 
     mocha.checkLeaks();
     mocha.run();
+    setTimeout(resetTests, 1000);
 };
 
 const startBenchmark = () => {
