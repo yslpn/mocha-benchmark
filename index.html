@@ -1,78 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--start CodeMirror -->
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.52.0/lib/codemirror.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.52.0/mode/javascript/javascript.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.52.0/lib/codemirror.css">
+    <!--end CodeMirror -->
+
     <!--start benchmark.js -->
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/benchmark@2.1.4/benchmark.min.js"></script>
     <!--end benchmark.js -->
 
-    <!-- добавим стили mocha для отображения результатов -->
+    <!-- start mocha-chai -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.css">
-    <!-- добавляем сам фреймворк mocha -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
-    <script>
-        // включаем режим тестирования в стиле BDD
-        mocha.setup('bdd');
-    </script>
-    <!-- добавим chai -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
     <script>
-        // chai предоставляет большое количество функций. Объявим assert глобально
         let assert = chai.assert;
     </script>
+    <!-- end mocha-chai -->
+
+    <link rel="stylesheet" href="./style.css">
+    <script src="./main.js"></script>
 </head>
 
 <body>
-    <!-- элемент с id="mocha" будет содержать результаты тестов -->
-    <div id="mocha"></div>
-    <!-- скрипт со спецификацией (describe, it...) -->
-    <script src="pow1.spec.js"></script>
-    <script src="pow2.spec.js"></script>
-    <script src="pow3.spec.js"></script>
+    <div class="functions">
+        <div>
+            <h4>Write the <span>pow1</span> function.</h4>
+            <textarea form='form' id="function1" autocorrect="off" autocapitalize="none">
+function pow1(x, n) {
+    return x ** n;
+}
+            </textarea>
+        </div>
+        <div>
+            <h4>Write the <span>pow2</span> function.</h4>
+            <textarea id="function2" autocorrect="off" autocapitalize="none">
+function pow2(x, n) {
+    return Math.pow(x, n);
+}
+            </textarea>
+        </div>
+        <div>
+            <h4>Write the <span>pow3</span> function.</h4>
+            <textarea id="function3" autocorrect="off" autocapitalize="none">
+function pow3(x, n) {
+    let result = x;
+    for (let i = 1; i < n; i++) {
+        result *= x;
+    }
+    return result;
+}
+            </textarea>
+        </div>
+        <button id='test' onclick="runTests()">TEST</button>
+    </div>
 
+    <div class="results">
+        <!-- mocha results -->
+        <div id="mocha"></div>
+        <!-- benchmark results -->
+        <div id="benchmark">
+            <div id="benchmark-result"></div>
+            <p id="benchmark-loading"></p>
+        </div>
+    </div>
+
+    <!-- start codemirror -->
     <script>
-        function pow1(x, n) {
-            return x ** n;
-        }
+        let CodeMirror1 = CodeMirror.fromTextArea(document.getElementById('function1'), {
+            mode: "javascript",
+            theme: "default",
+            lineNumbers: true
+        });
 
-        function pow2(x, n) {
-            return Math.pow(x, n);
-        }
-
-        function pow3(x, n) {
-            let result = x;
-
-            for (let i = 1; i < n; i++) {
-                result *= x;
-            }
-
-            return result;
-        }
+        let CodeMirror2 = CodeMirror.fromTextArea(document.getElementById('function2'), {
+            mode: "javascript",
+            theme: "default",
+            lineNumbers: true
+        });
+        let CodeMirror3 = CodeMirror.fromTextArea(document.getElementById('function3'), {
+            mode: "javascript",
+            theme: "default",
+            lineNumbers: true
+        });
     </script>
-    <script>
-        var suite = new Benchmark.Suite;
+    <!-- end codemirror -->
 
-        // add tests
-        suite.add('[x ** n]', pow1)
-            .add('[Math.pow(x, n)]', pow2)
-            .add('[Real function]', pow3)
-            // add listeners
-            .on('cycle', function (event) {
-                console.log(String(event.target));
-            })
-            .on('complete', function () {
-                console.log('Fastest is ' + this.filter('fastest').map('name'));
-            })
-            // run async
-            .run({
-                'async': true
-            });
-    </script>
-    <!-- запускаем тест! -->
-    <script>
-        mocha.run();
-    </script>
+    <!-- specification scripts -->
+    <script src="pow.spec.js"></script>
+
 </body>
 
 </html>
