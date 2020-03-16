@@ -13,7 +13,7 @@ const startMocha = () => {
 const startBenchmark = () => {
     document.getElementById('benchmark-result').textContent = '';
     document.getElementById('benchmark-loading').textContent = 'Loading...';
-    // document.getElementById('test').disabled = true;
+    document.getElementById('test').disabled = true;
 
     let suite = new Benchmark.Suite;
 
@@ -31,7 +31,7 @@ const startBenchmark = () => {
             final.textContent = 'Fastest is ' + this.filter('fastest').map('name');
             document.getElementById('benchmark-result').appendChild(final);
             document.getElementById('benchmark-loading').textContent = '';
-            // document.getElementById('test').disabled = false;
+            document.getElementById('test').disabled = false;
         })
         .run({
             'async': true
