@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <title>mocha-benchmark</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -9,6 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/codemirror@5.52.0/lib/codemirror.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/codemirror@5.52.0/mode/javascript/javascript.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.52.0/lib/codemirror.css">
+    <link rel="stylesheet" href="https://codemirror.net/theme/3024-day.css">
     <!--end CodeMirror -->
 
     <!--start benchmark.js -->
@@ -17,39 +19,41 @@
     <!--end benchmark.js -->
 
     <!-- start mocha-chai -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+    <link href="https://unpkg.com/mocha@4.0.1/mocha.css" rel="stylesheet" />
+    <script src="https://unpkg.com/chai@4.1.2/chai.js"></script>
+    <script src="https://unpkg.com/mocha@4.0.1/mocha.js"></script>
     <script>
         let assert = chai.assert;
     </script>
     <!-- end mocha-chai -->
 
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap&subset=cyrillic" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
     <script src="./main.js"></script>
 </head>
 
 <body>
-    <div class="functions">
-        <div>
-            <h4>Write the <span>pow1</span> function.</h4>
-            <textarea form='form' id="function1" autocorrect="off" autocapitalize="none">
+    <div class="container">
+        <div class="functions">
+            <div class="functions-item">
+                <h4 class="functions-header">Напишите функцию <span>pow1</span></h4>
+                <textarea id="function1">
 function pow1(x, n) {
     return x ** n;
 }
             </textarea>
-        </div>
-        <div>
-            <h4>Write the <span>pow2</span> function.</h4>
-            <textarea id="function2" autocorrect="off" autocapitalize="none">
+            </div>
+            <div class="functions-item">
+                <h4 class="functions-header">Напишите функцию <span>pow2</span></h4>
+                <textarea id="function2">
 function pow2(x, n) {
     return Math.pow(x, n);
 }
             </textarea>
-        </div>
-        <div>
-            <h4>Write the <span>pow3</span> function.</h4>
-            <textarea id="function3" autocorrect="off" autocapitalize="none">
+            </div>
+            <div class="functions-item">
+                <h4 class="functions-header">Напишите функцию <span>pow3</span></h4>
+                <textarea id="function3">
 function pow3(x, n) {
     let result = x;
     for (let i = 1; i < n; i++) {
@@ -58,36 +62,47 @@ function pow3(x, n) {
     return result;
 }
             </textarea>
+            </div>
+            <div class="functions-describe">
+                <p>Данный инструмент позволяет в интерактивном режиме тестировать функции возвредения в степень.</p>
+                <p>Они проверяются на правильность выдаваемых ответов и сравниваются между собой по скорости выполения.</p>
+                <p>Справка:</p>
+                <ul>
+                    <li><span>оps/sec</span> - это сколько операций в секунду выполняет функиция.</li>
+                    <li><span>runs sampled</span> - показывает сколько раз выполнялась функция.</li>
+                </ul>
+            </div>
         </div>
-        <button id='test' onclick="runTests()">TEST</button>
+        <button id='test' onclick="runTests()">Начать тестирование</button>
     </div>
 
     <div class="results">
         <!-- mocha results -->
-        <div id="mocha"></div>
+        <div class="results-item" id="mocha"></div>
         <!-- benchmark results -->
-        <div id="benchmark">
+        <div class="results-item" id="benchmark">
             <div id="benchmark-result"></div>
             <p id="benchmark-loading"></p>
         </div>
     </div>
 
+    </div>
     <!-- start codemirror -->
     <script>
         let CodeMirror1 = CodeMirror.fromTextArea(document.getElementById('function1'), {
             mode: "javascript",
-            theme: "default",
+            theme: "3024-day",
             lineNumbers: true
         });
 
         let CodeMirror2 = CodeMirror.fromTextArea(document.getElementById('function2'), {
             mode: "javascript",
-            theme: "default",
+            theme: "3024-day",
             lineNumbers: true
         });
         let CodeMirror3 = CodeMirror.fromTextArea(document.getElementById('function3'), {
             mode: "javascript",
-            theme: "default",
+            theme: "3024-day",
             lineNumbers: true
         });
     </script>

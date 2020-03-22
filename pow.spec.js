@@ -1,35 +1,53 @@
-describe("pow1", () => {
+describe("Тестирование функции pow1", function () {
 
-  it("when raising 2 to the 3rd degree, the result is 8", function() {
-    assert.equal(pow1(2, 3), 8);
-  });
+  describe("Возводит x в степень 3", function () {
 
-  it("when raising 3 to the 4th degree is equal to 81", function() {
-    assert.equal(pow1(3, 4), 81);
-  });
+    function makeTest(x) {
+      let expected = x * x * x;
+      it(`${x} в степени 3 будет ${expected}`, function () {
+        assert.equal(pow1(x, 3), expected);
+      });
+    }
 
-});
-
-describe("pow2", () => {
-
-  it("when raising 2 to the 3rd degree, the result is 8", function() {
-    assert.equal(pow2(2, 3), 8);
-  });
-
-  it("when raising 3 to the 4th degree is equal to 81", function() {
-    assert.equal(pow2(3, 4), 81);
+    for (let x = 1; x <= 5; x++) {
+      makeTest(x);
+    }
   });
 
 });
 
-describe("pow3", () => {
+describe("Тестирование функции pow2", function () {
 
-  it("when raising 2 to the 3rd degree, the result is 8", function() {
-    assert.equal(pow3(2, 3), 8);
+  describe("Возводит x в степень 3", function () {
+
+    function makeTest(x) {
+      let expected = x * x * x;
+      it(`${x} в степени 3 будет ${expected}`, function () {
+        assert.equal(pow2(x, 3), expected);
+      });
+    }
+
+    for (let x = 1; x <= 5; x++) {
+      makeTest(x);
+    }
   });
 
-  it("when raising 3 to the 4th degree is equal to 81", function() {
-    assert.equal(pow3(3, 4), 81);
+});
+
+describe("Тестирование функции pow2", function () {
+
+  describe("Возводит x в степень 3", function () {
+
+    function makeTest(x) {
+      let expected = x * x * x;
+      it(`${x} в степени 3 будет ${expected}`, function () {
+        assert.equal(pow2(x, 3), expected);
+      });
+    }
+
+    for (let x = 1; x <= 5; x++) {
+      makeTest(x);
+    }
   });
 
 });

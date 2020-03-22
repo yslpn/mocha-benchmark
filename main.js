@@ -1,6 +1,6 @@
 mocha.setup('bdd');
 
-const resetTests = () => {
+const resetMocha = () => {
     mocha.suite.suites = [];
     let testSpecs = document.getElementById('testSpecs');
     if (testSpecs) { testSpecs.remove() };
@@ -19,13 +19,14 @@ const startMocha = () => {
 
     mocha.checkLeaks();
     mocha.run();
-    setTimeout(resetTests, 1000);
+    setTimeout(resetMocha, 1000);
 };
 
 const startBenchmark = () => {
     document.getElementById('benchmark-result').textContent = '';
-    document.getElementById('benchmark-loading').textContent = 'Loading...';
+    document.getElementById('benchmark-loading').textContent = 'Выполняется тест скорости...';
     document.getElementById('test').disabled = true;
+    document.getElementById('test').textContent = 'Идёт тетирование...';
 
     let suite = new Benchmark.Suite;
 
@@ -40,9 +41,10 @@ const startBenchmark = () => {
         .on('complete', function () {
             let final = document.createElement("p");
             final.classList.add('fastest');
-            final.textContent = 'Fastest is ' + this.filter('fastest').map('name');
+            final.textContent = 'Самое быстрое: ' + this.filter('fastest').map('name');
             document.getElementById('benchmark-result').appendChild(final);
             document.getElementById('benchmark-loading').textContent = '';
+            document.getElementById('test').textContent = 'Начать тестирование';
             document.getElementById('test').disabled = false;
         })
         .run({
